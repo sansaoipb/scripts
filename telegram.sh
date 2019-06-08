@@ -22,7 +22,7 @@ then
   git clone $URLGIT
 fi
 
-cd $PROJETO ; sudo unzip telegram.zip ; sudo rm -rf README.md ; cd telegram ; sudo chmod +x telegram-cli* ; cd /tmp/
+cd $PROJETO ; sudo unzip telegram.zip ; sudo rm -rf README.md ; sudo rm -rf telegram.zip ; cd telegram ; sudo chmod +x telegram-cli* ; cd /tmp/
 
 if [ -e $DISTRO ]
 then
@@ -38,7 +38,14 @@ else
   PATHSCRIPTS=/usr/local/share/zabbix/alertscripts
 fi
 
-cd .. ; sudo cp -R telegram* configScrips.properties $PATHSCRIPTS ; cd $PATHSCRIPTS ; sudo chmod +x $PATHSCRIPTS/*.py ; cd .. ; sudo chown -R zabbix. *
+cd $PATHSCRIPTS
+
+if [ ! -e "configScrips.properties" ]
+then
+  cd /tmp/$PROJETO/ ; sudo cp -R telegram* configScrips.properties $PATHSCRIPTS ; cd $PATHSCRIPTS ; sudo chmod +x $PATHSCRIPTS/*.py ; cd .. ; sudo chown -R zabbix. *
+else:
+  cd /tmp/$PROJETO/ ; sudo cp -R telegram* $PATHSCRIPTS ; cd $PATHSCRIPTS ; sudo chmod +x $PATHSCRIPTS/*.py ; cd .. ; sudo chown -R zabbix. *
+fi
 
 replace 'config_directory = "/etc/zabbix/scripts/telegram/";' 'config_directory = "'$PATHSCRIPTS'/telegram/";' -- $PATHSCRIPTS/telegram/telegram.config
 echo ""
