@@ -1,8 +1,6 @@
 #!/bin/bash
 # ESCRITO POR SANSAO
 
-# Detecta se esta logado com usuario zabbix
-################################################################################
 if [ `whoami` != "zabbix" ] ; then
         echo ""
         echo "voce deve estar logado com o user zabbix para continuar."
@@ -12,7 +10,6 @@ if [ `whoami` != "zabbix" ] ; then
         echo ""
 		exit
 fi
-################################################################################
 
 SCRIPTS=/usr/lib/zabbix/alertscripts/
 PROJETO=Email-Graph-ZABBIX_Python
