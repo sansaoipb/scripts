@@ -44,7 +44,7 @@ replace 'config_directory = "/etc/zabbix/scripts/telegram/";' 'config_directory 
 echo ""
 echo "Acesse"
 echo ""
-echo cd $PATHSCRIPTS/telegram
+echo "cd $PATHSCRIPTS/telegram"
 echo ""
 echo "para começar a configuração"
 echo ""
