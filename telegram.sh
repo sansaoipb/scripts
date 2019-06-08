@@ -28,7 +28,7 @@ if [ -e $DISTRO ]
 then
   cd $PROJETO/telegram ; sudo mv telegram-cli.CentOS telegram-cli ; sudo yum install -y python-requests.noarch openssl098e.x86_64 python34-libs libconfig-devel readline-devel libevent-devel lua-devel python-devel unzip git make ; sudo ln -s /usr/lib64/liblua-5.1.so /usr/lib64/liblua5.2.so.0 ; sudo ln -s /usr/lib64/libcrypto.so.0.9.8e /usr/lib64/libcrypto.so.1.0.0
 else
-  cd $PROJETO/telegram ; sudo rm -rf telegram-cli.CentOS ; sudo apt-get install -y python-requests libreadline-dev libconfig-dev libssl-dev libevent-dev libjansson-dev libpython-dev libpython3-all-dev liblua5.2-0 git unzip make ; pip install requests
+  cd $PROJETO/telegram ; sudo rm -rf telegram-cli.CentOS ; sudo apt-get install -y python-pip libreadline-dev libconfig-dev libssl-dev libevent-dev libjansson-dev libpython-dev libpython3-all-dev liblua5.2-0 git unzip make ; pip install requests
 fi
 
 if [ -e $SCRIPTS ]
