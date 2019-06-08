@@ -40,7 +40,7 @@ fi
 
 cd .. ; sudo cp -R telegram* configScrips.properties $PATHSCRIPTS ; cd $PATHSCRIPTS ; sudo chmod +x $PATHSCRIPTS/*.py ; cd .. ; sudo chown -R zabbix. *
 
-replace 'config_directory = "/etc/zabbix/scripts/telegram/";' 'config_directory = '$PATHSCRIPTS'/telegram/;' -- $PATHSCRIPTS/telegram/telegram.config
+replace 'config_directory = "/etc/zabbix/scripts/telegram/";' 'config_directory = "'$PATHSCRIPTS'/telegram/";' -- $PATHSCRIPTS/telegram/telegram.config
 echo ""
 echo "Acesse"
 echo ""
