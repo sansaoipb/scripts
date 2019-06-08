@@ -1,10 +1,6 @@
 #!/bin/bash
 # ESCRITO POR SANSAO
 
-# Detecta se esta logado com usuario zabbix
-################################################################################
-#USER=$(whoami)
-#if [ "$USER" != "zabbix" ] ; then
 if [ `whoami` != "zabbix" ] ; then
         echo ""
         echo "voce deve estar logado com o user zabbix para continuar."
@@ -14,11 +10,8 @@ if [ `whoami` != "zabbix" ] ; then
         echo ""
 		exit
 fi
-################################################################################
 
 SCRIPTS=/usr/lib/zabbix/alertscripts/
-
-# Detecta a DISTRO
 DISTRO=/etc/redhat-release
 PROJETO=Telegram-Graph-authenticated_Python
 URLGIT=https://github.com/sansaoipb/$PROJETO
@@ -37,7 +30,6 @@ then
 else
   cd $PROJETO/telegram ; sudo rm -rf telegram-cli.CentOS ; sudo apt-get install -y libreadline-dev libconfig-dev libssl-dev libevent-dev libjansson-dev libpython-dev libpython3-all-dev liblua5.2-0 git unzip make
 fi
-
 
 if [ -e $SCRIPTS ]
 then
