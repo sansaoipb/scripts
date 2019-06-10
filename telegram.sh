@@ -12,7 +12,8 @@ if [ `whoami` != "zabbix" ] ; then
 fi
 
 SCRIPTS=/usr/lib/zabbix/alertscripts/
-PROJETO=Email-Graph-ZABBIX_Python
+DISTRO=/etc/redhat-release
+PROJETO=Telegram-Graph-authenticated_Python
 URLGIT=https://github.com/sansaoipb/$PROJETO
 
 
@@ -21,7 +22,14 @@ then
   git clone $URLGIT
 fi
 
-cd $PROJETO ; sudo rm -rf README.md ; cd /tmp/
+cd $PROJETO ; sudo unzip telegram.zip ; sudo rm -rf README.md ; sudo rm -rf telegram.zip ; cd telegram ; sudo chmod +x telegram-cli* ; cd /tmp/
+
+if [ -e $DISTRO ]
+then
+  cd $PROJETO/telegram ; sudo mv telegram-cli.CentOS telegram-cli ; sudo yum install -y python-requests.noarch openssl098e.x86_64 python34-libs libconfig-devel readline-devel libevent-devel lua-devel python-devel ; sudo ln -s /usr/lib64/liblua-5.1.so /usr/lib64/liblua5.2.so.0 ; sudo ln -s /usr/lib64/libcrypto.so.0.9.8e /usr/lib64/libcrypto.so.1.0.0
+else
+  cd $PROJETO/telegram ; sudo rm -rf telegram-cli.CentOS ; sudo apt-get install -y python-requests libreadline-dev libconfig-dev libssl-dev libevent-dev libjansson-dev libpython-dev libpython3-all-dev liblua5.2-0
+fi
 
 if [ -e $SCRIPTS ]
 then
@@ -34,17 +42,19 @@ cd $PATHSCRIPTS
 
 if [ ! -e "configScrips.properties" ]
 then
-  cd /tmp/$PROJETO ; sudo cp -R *.py configScrips.properties $PATHSCRIPTS ; cd $PATHSCRIPTS ; sudo chmod +x $PATHSCRIPTS/*.py ; cd .. ; sudo chown -R zabbix. *
+  cd /tmp/$PROJETO/ ; sudo cp -R telegram* configScrips.properties $PATHSCRIPTS ; cd $PATHSCRIPTS ; sudo chmod +x $PATHSCRIPTS/*.py ; cd .. ; sudo chown -R zabbix. *
 else
-  cd /tmp/$PROJETO ; sudo cp -R *.py $PATHSCRIPTS ; cd $PATHSCRIPTS ; sudo chmod +x $PATHSCRIPTS/*.py ; cd .. ; sudo chown -R zabbix. *
+  cd /tmp/$PROJETO/ ; sudo cp -R telegram* $PATHSCRIPTS ; cd $PATHSCRIPTS ; sudo chmod +x $PATHSCRIPTS/*.py ; cd .. ; sudo chown -R zabbix. *
 fi
+
+replace 'config_directory = "/etc/zabbix/scripts/telegram/";' 'config_directory = "'$PATHSCRIPTS'/telegram/";' -- $PATHSCRIPTS/telegram/telegram.config
 
 sudo rm -rf /tmp/$PROJETO/
 
 echo ""
 echo "Acesse"
 echo ""
-echo "cd $PATHSCRIPTS/"
+echo "cd $PATHSCRIPTS/telegram"
 echo ""
 echo "para começar a configuração"
 echo ""
