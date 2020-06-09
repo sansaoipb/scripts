@@ -45,7 +45,7 @@ cd $PATHSCRIPTS/telegram
 echo ""
 echo "Execute"
 echo ""
-echo "sudo -u zabbix./telegram-cli --rsa-key tg-server.pub --config telegram.config"
+echo "sudo -u zabbix ./telegram-cli --rsa-key tg-server.pub --config telegram.config"
 echo ""
 echo "para começar a configuração"
 echo ""
