@@ -31,21 +31,23 @@ cd $PATHSCRIPTS
 
 if [ ! -e "configScrips.properties" ]
 then
-  cd /tmp/$PROJETO/ ; sudo cp -R telegram* configScrips.properties $PATHSCRIPTS ; cd $PATHSCRIPTS ; sudo chmod +x $PATHSCRIPTS/*.py ; cd .. ; sudo chown -R zabbix. *
+  cd /tmp/$PROJETO/ ; sudo cp -R telegram* notificacoes* configScrips.properties $PATHSCRIPTS ; cd $PATHSCRIPTS ; sudo chmod +x $PATHSCRIPTS/*.py ; cd .. ; sudo chown -R zabbix. *
+
 else
-  cd /tmp/$PROJETO/ ; sudo cp -R telegram* $PATHSCRIPTS ; cd $PATHSCRIPTS ; sudo chmod +x $PATHSCRIPTS/*.py ; cd .. ; sudo chown -R zabbix. *
+  cd /tmp/$PROJETO/ ; sudo cp -R telegram* notificacoes* $PATHSCRIPTS ; cd $PATHSCRIPTS ; sudo chmod +x $PATHSCRIPTS/*.py ; cd .. ; sudo chown -R zabbix. *
+
 fi
 
-sed -i "s,/etc/zabbix/scripts,'$PATHSCRIPTS',g" $PATHSCRIPTS/telegram/telegram.config
+sed -i "s,/etc/zabbix/scripts,$PATHSCRIPTS,g" $PATHSCRIPTS/telegram/telegram.config
 
 sudo rm -rf /tmp/$PROJETO/
 
-cd $PATHSCRIPTS/telegram
+clear
 
 echo ""
 echo "Execute"
 echo ""
-echo "sudo -u zabbix ./telegram-cli --rsa-key tg-server.pub --config telegram.config"
+echo "cd '$PATHSCRIPTS'/telegram ; sudo -u zabbix ./telegram-cli --rsa-key tg-server.pub --config telegram.config"
 echo ""
 echo "para começar a configuração"
 echo ""
