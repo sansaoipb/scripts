@@ -1,16 +1,6 @@
 #!/bin/bash
 # ESCRITO POR SANSAO
 
-if [ `whoami` != "zabbix" ] ; then
-        echo ""
-        echo "voce deve estar logado com o user zabbix para continuar."
-        echo "Se nunca logou com ele, execute o comando em seguida logue"
-        echo ""
-        echo "sudo usermod -s /bin/bash zabbix ; sudo passwd zabbix"
-        echo ""
-		exit
-fi
-
 SCRIPTS=/usr/lib/zabbix/alertscripts/
 DISTRO=/etc/redhat-release
 PROJETO=Graphical_notifications_Zabbix
@@ -55,7 +45,7 @@ cd $PATHSCRIPTS/telegram
 echo ""
 echo "Execute"
 echo ""
-echo "./telegram-cli --rsa-key tg-server.pub --config telegram.config"
+echo "sudo -u zabbix./telegram-cli --rsa-key tg-server.pub --config telegram.config"
 echo ""
 echo "para começar a configuração"
 echo ""
