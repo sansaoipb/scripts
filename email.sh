@@ -1,15 +1,15 @@
 #!/bin/bash
 # ESCRITO POR SANSAO
 
-if [ `whoami` != "zabbix" ] ; then
-        echo ""
-        echo "voce deve estar logado com o user zabbix para continuar."
-        echo "Se nunca logou com ele, execute o comando em seguida logue"
-        echo ""
-        echo "sudo usermod -s /bin/bash zabbix ; sudo passwd zabbix"
-        echo ""
-		exit
-fi
+#if [ `whoami` != "zabbix" ] ; then
+#        echo ""
+#        echo "voce deve estar logado com o user zabbix para continuar."
+#        echo "Se nunca logou com ele, execute o comando em seguida logue"
+#        echo ""
+#        echo "sudo usermod -s /bin/bash zabbix ; sudo passwd zabbix"
+#        echo ""
+#		exit
+#fi
 
 SCRIPTS=/usr/lib/zabbix/alertscripts/
 PROJETO=Email-Graph-ZABBIX_Python
