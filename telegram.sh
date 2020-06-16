@@ -25,10 +25,10 @@ fi
 
 if [ ! -e $PROJETO ]
 then
-  git clone $URLGIT
+  git clone $URLGIT ; cd $PROJETO ; sudo unzip telegram.zip ; sudo rm -rf README.md ; sudo rm -rf telegram.zip ; cd telegram ; sudo chmod +x telegram-cli* ; cd /tmp/
+
 fi
 
-cd $PROJETO ; sudo unzip telegram.zip ; sudo rm -rf README.md ; sudo rm -rf telegram.zip ; cd telegram ; sudo chmod +x telegram-cli* ; cd /tmp/
 
 if [ -e $DISTRO ]
 then
