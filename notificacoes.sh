@@ -26,7 +26,6 @@ else
   cd /tmp/ ; sudo chown -R zabbix. /var/lib/zabbix ; sudo -u zabbix python3 -m pip install requests urllib3 pyrogram tgcrypto --user
 fi
 
-
 if [ ! -e $PROJETO ]
 then
   git clone $URLGIT
