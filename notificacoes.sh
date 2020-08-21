@@ -13,7 +13,6 @@ fi
 #####################################################################################
 
 SCRIPTS=/usr/lib/zabbix/alertscripts/
-DISTRO=/etc/redhat-release
 PROJETO=Graphical_notifications_Zabbix
 URLGIT=https://github.com/sansaoipb/$PROJETO
 MODULOS=/var/lib/zabbix/
@@ -35,19 +34,19 @@ cd $PROJETO
 
 if [ -e $SCRIPTS ]
 then
-  PATHSCRIPTS=/usr/lib/zabbix/alertscripts
+  PATHSCRIPTS=/usr/lib/zabbix/alertscripts/
 else
-  PATHSCRIPTS=/usr/local/share/zabbix/alertscripts
+  PATHSCRIPTS=/usr/local/share/zabbix/alertscripts/
 fi
 
 cd $PATHSCRIPTS
 
 if [ ! -e "configScripts.properties" ]
 then
-  cd /tmp/$PROJETO/ ; sudo cp -R notificacoes* configScripts.properties $PATHSCRIPTS ; cd $PATHSCRIPTS ; sudo chmod +x $PATHSCRIPTS/*.py ; cd .. ; sudo chown -R zabbix. *
+  cd /tmp/$PROJETO/ ; sudo cp -R notificacoes* configScripts.properties $PATHSCRIPTS ; cd $PATHSCRIPTS ; sudo chmod +x *.py ; cd .. ; sudo chown -R zabbix. *
 
 else
-  cd /tmp/$PROJETO/ ; sudo cp -R notificacoes* $PATHSCRIPTS ; cd $PATHSCRIPTS ; sudo chmod +x $PATHSCRIPTS/*.py ; cd .. ; sudo chown -R zabbix. *
+  cd /tmp/$PROJETO/ ; sudo cp -R notificacoes* $PATHSCRIPTS ; cd $PATHSCRIPTS ; sudo chmod +x *.py ; cd .. ; sudo chown -R zabbix. *
 fi
 
 sudo rm -rf /tmp/$PROJETO/
@@ -55,7 +54,7 @@ sudo rm -rf /tmp/$PROJETO/
 clear
 
 echo ""
-echo "Entre em 'cd $PATHSCRIPTS/', edite o arquivo 'configScripts.properties' e depois execute o comando:"
+echo "Entre em 'cd $PATHSCRIPTS', edite o arquivo 'configScripts.properties' e depois execute o comando:"
 echo ""
 echo "sudo -u zabbix ./notificacoes-teste.py info"
 echo ""
