@@ -56,9 +56,9 @@ sudo rm -rf /tmp/$PROJETO/
 clear
 
 echo ""
-echo "Entre em 'cd $PATHSCRIPTS', edite o arquivo 'configScripts.properties' e depois execute o comando:"
+echo "Entre em no caminho abaixo e edite o arquivo 'configScripts.properties':"
 echo ""
-echo "sudo -u zabbix ./notificacoes-teste.py info"
+echo "cd $PATHSCRIPTS"
 echo ""
 echo "para começar a configuração"
 echo ""
