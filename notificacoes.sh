@@ -17,11 +17,13 @@ PROJETO=Graphical_notifications_Zabbix
 URLGIT=https://github.com/sansaoipb/$PROJETO
 MODULOS=/var/lib/zabbix/
 
+curl https://bootstrap.pypa.io/get-pip.py | sudo -H python3.6
+
 if [ ! -e $MODULOS ]
 then
-  cd /tmp/ ; sudo mkdir /var/lib/zabbix/ ; sudo chown -R zabbix. /var/lib/zabbix ; sudo -u zabbix python3 -m pip install requests urllib3 pyrogram tgcrypto --user
+  cd /tmp/ ; sudo mkdir /var/lib/zabbix/ ; sudo chown -R zabbix. /var/lib/zabbix ; sudo -u zabbix python3.6 -m pip install requests urllib3 pyrogram tgcrypto --user
 else
-  cd /tmp/ ; sudo chown -R zabbix. /var/lib/zabbix ; sudo -u zabbix python3 -m pip install requests urllib3 pyrogram tgcrypto --user
+  cd /tmp/ ; sudo chown -R zabbix. /var/lib/zabbix ; sudo -u zabbix python3.6 -m pip install requests urllib3 pyrogram tgcrypto --user
 fi
 
 
