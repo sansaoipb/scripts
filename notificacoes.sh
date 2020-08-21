@@ -1,31 +1,37 @@
 #!/bin/bash
 # ESCRITO POR SANSAO
 
+# Detecta se eh um usuario com poderes de root que esta executando o script
+#####################################################################################
+CMDLINE=$0
+USER_ROOT=$(id | cut -d= -f2 | cut -d\( -f1)
+if [ ! "$USER_ROOT" -eq 0 ] ; then
+        echo "voce deve ser root para executar este script."
+        echo "execute o comando \"sudo $CMDLINE\""
+        exit 1
+fi
+#####################################################################################
+
 SCRIPTS=/usr/lib/zabbix/alertscripts/
 DISTRO=/etc/redhat-release
 PROJETO=Graphical_notifications_Zabbix
 URLGIT=https://github.com/sansaoipb/$PROJETO
+MODULOS=/var/lib/zabbix/
 
-if [ -e $DISTRO ]
+if [ ! -e $MODULOS ]
 then
-  sudo yum install -y jansson-devel openssl098e.x86_64 python34-libs libconfig-devel readline-devel libevent-devel lua-devel python-devel python3-devel python-pip python-pip3 python-requests python3-requests epel-release unzip git ; sudo ln -s /usr/lib64/liblua-5.1.so /usr/lib64/liblua5.2.so.0 ; sudo ln -s /usr/lib64/libcrypto.so.0.9.8e /usr/lib64/libcrypto.so.1.0.0
+  cd /tmp/ ; sudo mkdir /var/lib/zabbix/ ; sudo chown -R zabbix. /var/lib/zabbix ; sudo -u zabbix python3 -m pip install requests urllib3 pyrogram tgcrypto --user
 else
-  sudo apt-get install -y libjansson-dev libreadline-dev libconfig-dev libssl-dev libevent-dev libjansson-dev libpython-dev libpython3-all-dev liblua5.2-0 python-pip python-pip3 python-requests python3-requests unzip git
+  cd /tmp/ ; sudo chown -R zabbix. /var/lib/zabbix ; sudo -u zabbix python3 -m pip install requests urllib3 pyrogram tgcrypto --user
 fi
+
 
 if [ ! -e $PROJETO ]
 then
   git clone $URLGIT
 fi
 
-cd $PROJETO ; sudo unzip telegram.zip ; sudo rm -rf README.md ; sudo rm -rf telegram.zip ; cd telegram ; sudo chmod +x telegram-cli* ; cd /tmp/
-
-if [ -e $DISTRO ]
-then
-  cd $PROJETO/telegram ; sudo mv telegram-cli.CentOS telegram-cli
-else
-  cd $PROJETO/telegram ; sudo rm -rf telegram-cli.CentOS
-fi
+cd $PROJETO
 
 if [ -e $SCRIPTS ]
 then
@@ -36,24 +42,22 @@ fi
 
 cd $PATHSCRIPTS
 
-if [ ! -e "configScrips.properties" ]
+if [ ! -e "configScripts.properties" ]
 then
-  cd /tmp/$PROJETO/ ; sudo cp -R telegram* notificacoes* configScrips.properties $PATHSCRIPTS ; cd $PATHSCRIPTS ; sudo chmod +x $PATHSCRIPTS/*.py ; cd .. ; sudo chown -R zabbix. *
+  cd /tmp/$PROJETO/ ; sudo cp -R notificacoes* configScripts.properties $PATHSCRIPTS ; cd $PATHSCRIPTS ; sudo chmod +x $PATHSCRIPTS/*.py ; cd .. ; sudo chown -R zabbix. *
 
 else
-  cd /tmp/$PROJETO/ ; sudo cp -R telegram* notificacoes* $PATHSCRIPTS ; cd $PATHSCRIPTS ; sudo chmod +x $PATHSCRIPTS/*.py ; cd .. ; sudo chown -R zabbix. *
+  cd /tmp/$PROJETO/ ; sudo cp -R notificacoes* $PATHSCRIPTS ; cd $PATHSCRIPTS ; sudo chmod +x $PATHSCRIPTS/*.py ; cd .. ; sudo chown -R zabbix. *
 fi
-
-sed -i "s,/etc/zabbix/scripts,$PATHSCRIPTS,g" $PATHSCRIPTS/telegram/telegram.config
 
 sudo rm -rf /tmp/$PROJETO/
 
 clear
 
 echo ""
-echo "Execute"
+echo "Entre em 'cd $PATHSCRIPTS/', edite o arquivo 'configScripts.properties' e depois execute o comando:"
 echo ""
-echo "cd $PATHSCRIPTS/telegram ; sudo -u zabbix ./telegram-cli --rsa-key tg-server.pub --config telegram.config"
+echo "sudo -u zabbix ./notificacoes-teste.py info"
 echo ""
 echo "para começar a configuração"
 echo ""
