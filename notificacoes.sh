@@ -7,7 +7,9 @@ CMDLINE=$0
 USER_ROOT=$(id | cut -d= -f2 | cut -d\( -f1)
 if [ ! "$USER_ROOT" -eq 0 ] ; then
         echo "voce deve ser root para executar este script."
+        echo ""
         echo "execute o comando \"sudo $CMDLINE\""
+        echo ""
         exit 1
 fi
 #####################################################################################
@@ -50,9 +52,6 @@ else
   cd /tmp/$PROJETO/ ; sudo cp -R notificacoes* $PATHSCRIPTS ; cd $PATHSCRIPTS ; sudo chmod +x *.py ; dos2unix *.py ; cd .. ; sudo chown -R zabbix. *
 fi
 
-sudo rm -rf /tmp/$PROJETO/
-
-clear
 
 echo ""
 echo "Entre em no caminho abaixo e edite o arquivo 'configScripts.properties':"
