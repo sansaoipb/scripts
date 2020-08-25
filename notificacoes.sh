@@ -1,7 +1,7 @@
 #!/bin/bash
 # ESCRITO POR SANSAO
 
-# Detecta se eh um usuario com poderes de root que esta executando o script
+# Detecta se é um usuário com poderes de root que está executando o script
 #####################################################################################
 CMDLINE=$0
 USER_ROOT=$(id | cut -d= -f2 | cut -d\( -f1)
@@ -54,7 +54,7 @@ fi
 
 
 echo ""
-echo "Entre em no caminho abaixo e edite o arquivo 'configScripts.properties':"
+echo "Entre no caminho abaixo e edite o arquivo 'configScripts.properties':"
 echo ""
 echo "cd $PATHSCRIPTS"
 echo ""
