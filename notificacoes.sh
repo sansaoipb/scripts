@@ -1,12 +1,12 @@
 #!/bin/bash
-# ESCRITO POR SANSAO
+# ESCRITO POR SANSÃO
 
-# Detecta se eh um usuario com poderes de root que esta executando o script
+# Detecta se é um usuário com poderes de root que esta executando o script
 #####################################################################################
 CMDLINE=$0
 USER_ROOT=$(id | cut -d= -f2 | cut -d\( -f1)
 if [ ! "$USER_ROOT" -eq 0 ] ; then
-        echo "voce deve ser root para executar este script."
+        echo "você deve ser root para executar este script."
         echo "execute o comando \"sudo $CMDLINE\""
         exit 1
 fi
