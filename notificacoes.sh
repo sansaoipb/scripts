@@ -52,7 +52,7 @@ fi
 
 sudo rm -rf /tmp/$PROJETO/
 
-clear
+#clear
 
 echo ""
 echo "Entre em no caminho abaixo e edite o arquivo 'configScripts.properties':"
