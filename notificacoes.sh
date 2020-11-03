@@ -6,13 +6,36 @@
 CMDLINE=$0
 USER_ROOT=$(id | cut -d= -f2 | cut -d\( -f1)
 if [ ! "$USER_ROOT" -eq 0 ] ; then
-        echo "você deve ser root para executar este script."
-        echo "execute o comando \"sudo $CMDLINE\""
+        echo "\nvocê deve ser root para executar este script."
+        echo "execute o comando \"sudo sh $CMDLINE\"\n"
         exit 1
 fi
 #####################################################################################
 
-SCRIPTS=/usr/lib/zabbix/alertscripts/
+
+# Detecta se o python 3.6 ou superior existe no ambiente
+#####################################################################################
+command_out=$( /usr/bin/python3 -V 2>&1 )
+command_rc=$?
+if [ $command_rc -ne 0 ]; then
+        echo "\nApontamento '/usr/bin/python3' não encontrado.\nInstale/Aponte o '/usr/bin/python3.6' ou superior para '/usr/bin/python3' e reexecute o comando:\n\nsudo sh notificacoes.sh\n"
+        exit 2
+fi
+#####################################################################################
+
+
+# Detecta se o apontamento para python3 está para python 3.6 ou superior.
+#####################################################################################
+pythonVersion=$(/usr/bin/python3 -V 2>&1 | tr -d [:alpha:][:blank:] | cut -c 1-3)
+versioM=3.6
+
+if [ 1 -eq "$(echo "${pythonVersion} < ${versioM}" | bc)" ] ; then
+        echo "\nA versão apontada para o '/usr/bin/python3' é do \"Python $pythonVersion\".\nInstale/Atualize/Aponte para o python3.6 ou superior e reexecute o comando:\n\nsudo sh notificacoes.sh\n"
+        exit 3
+fi
+#####################################################################################
+
+PATHSCRIPTS="$(/usr/sbin/zabbix_server --help | grep "AlertScriptsPath" | awk '{ print $2 }' | tr -d "\"")/"
 PROJETO=Graphical_notifications_Zabbix
 URLGIT=https://github.com/sansaoipb/$PROJETO
 MODULOS=/var/lib/zabbix/
@@ -31,15 +54,6 @@ then
   git clone $URLGIT
 fi
 
-cd $PROJETO
-
-if [ -e $SCRIPTS ]
-then
-  PATHSCRIPTS=/usr/lib/zabbix/alertscripts/
-else
-  PATHSCRIPTS=/usr/local/share/zabbix/alertscripts/
-fi
-
 cd $PATHSCRIPTS
 
 if [ ! -e "configScripts.properties" ]
@@ -55,9 +69,9 @@ sudo rm -rf /tmp/$PROJETO/
 #clear
 
 echo ""
-echo "Entre em no caminho abaixo e edite o arquivo 'configScripts.properties':"
+echo "Execute o comando abaixo para editar o arquivo de configuração:"
 echo ""
-echo "cd $PATHSCRIPTS"
+echo "cd $PATHSCRIPTS ; vim configScripts.properties"
 echo ""
-echo "para começar a configuração"
+echo "e comece os envios"
 echo ""
