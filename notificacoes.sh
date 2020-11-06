@@ -39,8 +39,17 @@ PATHSCRIPTS="$(/usr/sbin/zabbix_server --help | grep "AlertScriptsPath" | awk '{
 PROJETO=Graphical_notifications_Zabbix
 URLGIT=https://github.com/sansaoipb/$PROJETO
 MODULOS=/var/lib/zabbix/
+PATHSCRIPTSOLD=/usr/lib/zabbix/alertscripts/
 
 curl https://bootstrap.pypa.io/get-pip.py | sudo -H python3
+
+if [ ! -e $PATHSCRIPTSOLD ]
+then
+  sudo mkdir -p $PATHSCRIPTS
+else
+  sudo ln -s /usr/lib/zabbix/alertscripts/ /usr/lib/zabbix/externalscripts/ /usr/share/zabbix/
+fi
+
 
 if [ ! -e $MODULOS ]
 then
