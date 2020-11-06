@@ -35,11 +35,13 @@ if [ 1 -eq "$(echo "${pythonVersion} < ${versioM}" | bc)" ] ; then
 fi
 #####################################################################################
 
+
 PATHSCRIPTS="$(/usr/sbin/zabbix_server --help | grep "AlertScriptsPath" | awk '{ print $2 }' | tr -d "\"")/"
 PROJETO=Graphical_notifications_Zabbix
 URLGIT=https://github.com/sansaoipb/$PROJETO
 MODULOS=/var/lib/zabbix/
 PATHSCRIPTSOLD=/usr/lib/zabbix/alertscripts/
+
 
 curl https://bootstrap.pypa.io/get-pip.py | sudo -H python3
 
@@ -58,12 +60,15 @@ else
   cd /tmp/ ; sudo chown -R zabbix. /var/lib/zabbix ; sudo -H -u zabbix python3 -m pip install wheel requests urllib3 pyrogram tgcrypto pycryptodome --user
 fi
 
+
 if [ ! -e $PROJETO ]
 then
   git clone $URLGIT
 fi
 
+
 cd $PATHSCRIPTS
+
 
 if [ ! -e "configScripts.properties" ]
 then
