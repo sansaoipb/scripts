@@ -40,7 +40,7 @@ PATHSCRIPTS="$(/usr/sbin/zabbix_server --help | grep "AlertScriptsPath" | awk '{
 PROJETO=Graphical_notifications_Zabbix
 URLGIT=https://github.com/sansaoipb/$PROJETO
 MODULOS=/var/lib/zabbix/
-PATHSCRIPTSOLD=/usr/lib/zabbix/alertscripts/
+PATHSCRIPTSOLD=/usr/lib/zabbix/
 
 
 curl https://bootstrap.pypa.io/get-pip.py | sudo -H python3
@@ -49,7 +49,7 @@ if [ ! -e $PATHSCRIPTSOLD ]
 then
   sudo mkdir -p $PATHSCRIPTS
 else
-  sudo ln -s /usr/lib/zabbix/alertscripts/ /usr/lib/zabbix/externalscripts/ /usr/share/zabbix/
+  sudo ln -s /usr/lib/zabbix/alertscripts/ /usr/lib/zabbix/externalscripts/ /usr/share/zabbix/ ; sudo chown -R zabbix. $PATHSCRIPTSOLD
 fi
 
 
@@ -78,14 +78,14 @@ else
   cd /tmp/$PROJETO/ ; sudo cp -R notificacoes* $PATHSCRIPTS ; cd $PATHSCRIPTS ; sudo chmod +x *.py ; dos2unix *.py ; cd .. ; sudo chown -R zabbix. *
 fi
 
-sudo rm -rf /tmp/$PROJETO/
+sudo rm -rf /tmp/$PROJETO/ ; sudo chown -R zabbix. /usr/share/zabbix/
 
 #clear
 
 echo ""
 echo "Execute o comando abaixo para editar o arquivo de configuração:"
 echo ""
-echo "cd $PATHSCRIPTS ; vim configScripts.properties"
+echo "cd $PATHSCRIPTS ; sudo -u zabbix vim configScripts.properties"
 echo ""
 echo "e vamos começar com os envios"
 echo ""
