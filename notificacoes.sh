@@ -49,10 +49,7 @@ if [ ! -e $PATHSCRIPTSOLD ]
 then
   sudo mkdir -p $PATHSCRIPTS
 else
-  if [ ! -e /usr/lib/zabbix/alertscripts/ ] ; then
-    sudo ln -s /usr/lib/zabbix/alertscripts/ /usr/lib/zabbix/externalscripts/ /usr/share/zabbix/
-  fi
-  sudo chown -R zabbix. $PATHSCRIPTSOLD
+  sudo ln -s /usr/lib/zabbix/alertscripts/ /usr/lib/zabbix/externalscripts/ /usr/share/zabbix/ ; sudo chown -R zabbix. $PATHSCRIPTSOLD
 fi
 
 
