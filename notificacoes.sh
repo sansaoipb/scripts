@@ -6,8 +6,11 @@
 CMDLINE=$0
 USER_ROOT=$(id | cut -d= -f2 | cut -d\( -f1)
 if [ ! "$USER_ROOT" -eq 0 ] ; then
-        echo "\nvocê deve ser root para executar este script."
-        echo "execute o comando \"sudo sh $CMDLINE\"\n"
+        echo ""
+        echo "você deve ser root para executar este script, execute o comando:"
+        echo ""
+        echo "sudo bash $CMDLINE"
+        echo ""
         exit 1
 fi
 #####################################################################################
@@ -18,7 +21,12 @@ fi
 command_out=$( /usr/bin/python3 -V 2>&1 )
 command_rc=$?
 if [ $command_rc -ne 0 ]; then
-        echo "\nApontamento '/usr/bin/python3' não encontrado.\nInstale/Aponte o '/usr/bin/python3.6' ou superior para '/usr/bin/python3' e reexecute o comando:\n\nsudo sh notificacoes.sh\n"
+        echo ""
+        echo "Apontamento '/usr/bin/python3' não encontrado."
+        echo "Instale/Aponte o '/usr/bin/python3.6' ou superior para '/usr/bin/python3' e reexecute o comando:"
+        echo ""
+        echo "sudo bash notificacoes.sh"
+        echo ""
         exit 2
 fi
 #####################################################################################
@@ -30,26 +38,40 @@ pythonVersion=$(/usr/bin/python3 -V 2>&1 | tr -d [:alpha:][:blank:] | cut -c 1-3
 versioM=3.6
 
 if [ 1 -eq "$(echo "${pythonVersion} < ${versioM}" | bc)" ] ; then
-        echo "\nA versão apontada para o '/usr/bin/python3' é do \"Python $pythonVersion\".\nInstale/Atualize/Aponte para o python3.6 ou superior e reexecute o comando:\n\nsudo sh notificacoes.sh\n"
+        echo ""
+        echo "A versão apontada para o '/usr/bin/python3' é do \"Python $pythonVersion\".\n"
+        echo "Instale/Atualize/Aponte para o python3.6 ou superior e reexecute o comando:"
+        echo ""
+        echo "sudo bash notificacoes.sh"
+        echo ""
+
         exit 3
 fi
 #####################################################################################
 
 
-PATHSCRIPTS="$(/usr/sbin/zabbix_server --help | grep "AlertScriptsPath" | awk '{ print $2 }' | tr -d "\"")/"
+PATHSCRIPTS0="$(/usr/sbin/zabbix_server --help | grep "AlertScriptsPath" | awk '{ print $2 }' | tr -d "\"" | sed -e 's,/, ,g')"
 PROJETO=Graphical_notifications_Zabbix
 URLGIT=https://github.com/sansaoipb/$PROJETO
 MODULOS=/var/lib/zabbix/
 PATHSCRIPTSOLD=/usr/lib/zabbix/
 
+IFS=' ' read -a strarr <<< "$PATHSCRIPTS0"
+delete=alertscripts
+array=${strarr[@]/$delete}
+PATHSCRIPTS=$(echo "/$array/" | sed -e 's, ,/,g')
+
+#echo $PATHSCRIPTS
+#exit 4
 
 curl https://bootstrap.pypa.io/get-pip.py | sudo -H python3
 
+
 if [ ! -e $PATHSCRIPTSOLD ]
 then
-  sudo mkdir -p $PATHSCRIPTS
+  sudo mkdir -p $PATHSCRIPTS0
 else
-  sudo ln -s /usr/lib/zabbix/alertscripts/ /usr/lib/zabbix/externalscripts/ /usr/share/zabbix/ ; sudo chown -R zabbix. $PATHSCRIPTSOLD
+  sudo ln -s /usr/lib/zabbix/alertscripts/ /usr/lib/zabbix/externalscripts/ $PATHSCRIPTS ; sudo chown -R zabbix. $PATHSCRIPTSOLD
 fi
 
 
