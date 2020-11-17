@@ -44,7 +44,6 @@ if [ 1 -eq "$(echo "${pythonVersion} < ${versioM}" | bc)" ] ; then
         echo ""
         echo "sudo bash notificacoes.sh"
         echo ""
-
         exit 3
 fi
 #####################################################################################
