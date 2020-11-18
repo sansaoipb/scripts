@@ -102,11 +102,9 @@ if [ ! -e $PROJETO ] ; then
 fi
 
 
-cd $PATHSCRIPTS
 
-
-if [ ! -e "configScripts.properties" ] ; then
-  sudo cp -R configScripts.properties
+if [ ! -e "$PATHSCRIPTS/configScripts.properties" ] ; then
+  sudo cp -R /tmp/$PROJETO/configScripts.properties $PATHSCRIPTS
 fi
 
 cd /tmp/$PROJETO/ ; sudo cp -R notificacoes* $PATHSCRIPTS ; cd $PATHSCRIPTS ; sudo chmod +x *.py ; dos2unix *.py ; cd .. ; sudo chown -R zabbix. * ; sudo rm -rf /tmp/$PROJETO/ ; sudo chown -R zabbix. $PATHSCRIPTS
