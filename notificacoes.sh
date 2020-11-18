@@ -50,20 +50,17 @@ echo ""
 echo ""
 #exit 4
 
-PATHSCRIPTS0="$(/usr/sbin/zabbix_server --help | grep "AlertScriptsPath" | awk '{ print $2 }' | tr -d "\"" | sed -e 's,/, ,g')"
+PATHSCRIPTS0="$(/usr/sbin/zabbix_server --help | grep "AlertScriptsPath" | awk '{ print $2 }' | tr -d "\"")/"
 PROJETO=Graphical_notifications_Zabbix
 URLGIT=https://github.com/sansaoipb/$PROJETO
 PATHPACKET=/usr/lib/zabbix
 PATHSOURCE=/usr/local/share/zabbix
 
-IFS=' ' read -a strarr <<< "$PATHSCRIPTS0"
-delete=alertscripts
+strarr=$PATHSCRIPTS0 #$(echo $PATHSCRIPTS0 | sed -e 's,/, ,g')
+#IFS=' ' read -a strarr <<< "$PATHS"
+delete=alertscripts/
 array=${strarr[@]/$delete}
-PATHSCRIPTS=$(echo "/$array/" | sed -e 's, ,/,g')
-
-#echo $PATHSCRIPTS
-#exit 4
-
+PATHSCRIPTS=$array
 
 if [ ! -e $PATHPACKET ] ; then
   sudo mkdir /var/lib/zabbix/
@@ -90,8 +87,6 @@ else
   sudo chown -R zabbix. $PATHSOURCE
 fi
 
-
-#exit 4
 
 curl https://bootstrap.pypa.io/get-pip.py | sudo -H python3
 
