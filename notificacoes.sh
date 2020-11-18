@@ -71,19 +71,19 @@ fi
 
 
 if [ ! -e $PATHSCRIPTS ] ; then
-  sudo mkdir -p $PATHSCRIPTS0
+  sudo mkdir -p $PATHSCRIPTS
 fi
 
 
 if [ -e $PATHPACKET ] ; then
-   if [ ! -e $PATHSCRIPTS/alertscripts/ ] ; then
+   if [ ! -e $PATHSCRIPTS0 ] ; then
     sudo ln -s $PATHPACKET/alertscripts/ $PATHPACKET/externalscripts/ $PATHSCRIPTS
 
   fi
   sudo chown -R zabbix. $PATHPACKET
 
 else
-  if [ ! -e $PATHSCRIPTS/alertscripts/ ] ; then
+  if [ ! -e $PATHSCRIPTS0 ] ; then
     sudo ln -s $PATHSOURCE/alertscripts/ $PATHSOURCE/externalscripts/ $PATHSCRIPTS
 
   fi
@@ -103,18 +103,18 @@ fi
 
 
 
-if [ ! -e "$PATHSCRIPTS/configScripts.properties" ] ; then
-  sudo cp -R /tmp/$PROJETO/configScripts.properties $PATHSCRIPTS
+if [ ! -e "$PATHSCRIPTS0/configScripts.properties" ] ; then
+  sudo cp -R /tmp/$PROJETO/configScripts.properties $PATHSCRIPTS0
 fi
 
-cd /tmp/$PROJETO/ ; sudo cp -R notificacoes* $PATHSCRIPTS ; cd $PATHSCRIPTS ; sudo chmod +x *.py ; dos2unix *.py ; cd .. ; sudo chown -R zabbix. * ; sudo rm -rf /tmp/$PROJETO/ ; sudo chown -R zabbix. $PATHSCRIPTS
+cd /tmp/$PROJETO/ ; sudo cp -R notificacoes* $PATHSCRIPTS0 ; cd $PATHSCRIPTS0 ; sudo chmod +x *.py ; dos2unix *.py ; sudo rm -rf /tmp/$PROJETO/ ; sudo chown -R zabbix. $PATHSCRIPTS
 
 #clear
 
 echo ""
 echo "Execute o comando abaixo para editar o arquivo de configuração:"
 echo ""
-echo "cd $PATHSCRIPTS ; sudo -u zabbix vim configScripts.properties"
+echo "cd $PATHSCRIPTS0 ; sudo -u zabbix vim configScripts.properties"
 echo ""
 echo "e vamos começar com os envios"
 echo ""
