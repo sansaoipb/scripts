@@ -43,9 +43,9 @@ elif [ 1 -eq "$(echo "${pythonVersion} < ${versioM}" | bc)" ] ; then
 fi
 
 echo ""
-echo ""
 echo "Versão do '/usr/bin/python3' validada:"
 echo "Apontado para \"$command_out\"."
+echo ""
 echo ""
 echo ""
 #exit 4
@@ -75,19 +75,19 @@ if [ ! -e $PATHSCRIPTS ] ; then
 fi
 
 
-if [ ! -e $PATHPACKET ] ; then
-  if [ ! -e $PATHSOURCE/alertscripts/ ] ; then
-    sudo ln -s $PATHSOURCE/alertscripts/ $PATHSOURCE/externalscripts/ $PATHSCRIPTS
-
-  fi
-  sudo chown -R zabbix. $PATHSOURCE
-
-else
-  if [ ! -e $PATHPACKET/alertscripts/ ] ; then
+if [ -e $PATHPACKET ] ; then
+   if [ ! -e $PATHSCRIPTS/alertscripts/ ] ; then
     sudo ln -s $PATHPACKET/alertscripts/ $PATHPACKET/externalscripts/ $PATHSCRIPTS
 
   fi
   sudo chown -R zabbix. $PATHPACKET
+
+else
+  if [ ! -e $PATHSCRIPTS/alertscripts/ ] ; then
+    sudo ln -s $PATHSOURCE/alertscripts/ $PATHSOURCE/externalscripts/ $PATHSCRIPTS
+
+  fi
+  sudo chown -R zabbix. $PATHSOURCE
 fi
 
 
