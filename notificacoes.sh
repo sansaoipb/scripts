@@ -39,7 +39,7 @@ versioM=3.6
 
 if [ 1 -eq "$(echo "${pythonVersion} < ${versioM}" | bc)" ] ; then
         echo ""
-        echo "A versão apontada para o '/usr/bin/python3' é do \"Python $pythonVersion\".\n"
+        echo "A versão apontada para o '/usr/bin/python3' é do \"Python $pythonVersion\"."
         echo "Instale/Atualize/Aponte para o python3.6 ou superior e reexecute o comando:"
         echo ""
         echo "sudo bash notificacoes.sh"
