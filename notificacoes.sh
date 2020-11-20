@@ -6,7 +6,7 @@ USER_ROOT=$(id | cut -d= -f2 | cut -d\( -f1)
 command_out=$( /usr/bin/python3 -V 2>&1 )
 command_rc=$?
 pythonVersion=$(echo $command_out | tr -d [:alpha:][:blank:] | cut -c 1-3)
-pathPIP=$(/usr/bin/which pip3)
+pathPIP=$(/usr/bin/which pip3 2>&1 )
 versioM=3.6
 
 # Detecta se é um usuário com poderes de root que esta executando o script
@@ -41,7 +41,6 @@ elif [ 1 -eq "$(echo "${pythonVersion} < ${versioM}" | bc)" ] ; then
         echo ""
         exit 3
 fi
-
 
 echo ""
 echo ""
