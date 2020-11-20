@@ -5,8 +5,8 @@ CMDLINE=$0
 USER_ROOT=$(id | cut -d= -f2 | cut -d\( -f1)
 command_out=$( /usr/bin/python3 -V 2>&1 )
 command_rc=$?
-#pythonVersion=$(/usr/bin/python3 -V 2>&1 | tr -d [:alpha:][:blank:] | cut -c 1-3)
 pythonVersion=$(echo $command_out | tr -d [:alpha:][:blank:] | cut -c 1-3)
+pathPIP=$(/usr/bin/which pip3)
 versioM=3.6
 
 # Detecta se é um usuário com poderes de root que esta executando o script
@@ -42,25 +42,43 @@ elif [ 1 -eq "$(echo "${pythonVersion} < ${versioM}" | bc)" ] ; then
         exit 3
 fi
 
+
+echo ""
 echo ""
 echo "Versão do '/usr/bin/python3' validada:"
 echo "Apontado para \"$command_out\"."
 echo ""
 echo ""
 echo ""
+
+
+if [ ! -z $pathPIP ] ; then
+  pipVersion=$($pathPIP -V | cut -f 6 -d ' ' | tr -d [=\)=])
+
+  if [ 1 -eq "$(echo "${pipVersion} < ${versioM}" | bc)" ] ; then
+    curl https://bootstrap.pypa.io/get-pip.py | sudo -H python3
+
+  fi
+else
+  curl https://bootstrap.pypa.io/get-pip.py | sudo -H python3
+
+fi
+
 #exit 4
 
-PATHSCRIPTS0="$(/usr/sbin/zabbix_server --help | grep "AlertScriptsPath" | awk '{ print $2 }' | tr -d "\"")/"
+PATHSCRIPTS0="$(/usr/sbin/zabbix_server --help | grep "AlertScriptsPath" | awk '{ print $2 }' | tr -d "\"")"
 PROJETO=Graphical_notifications_Zabbix
 URLGIT=https://github.com/sansaoipb/$PROJETO
 PATHPACKET=/usr/lib/zabbix
 PATHSOURCE=/usr/local/share/zabbix
 
-strarr=$PATHSCRIPTS0 #$(echo $PATHSCRIPTS0 | sed -e 's,/, ,g')
-#IFS=' ' read -a strarr <<< "$PATHS"
-delete=alertscripts/
+PATHS=$PATHSCRIPTS0
+delete=alertscripts
 array=${strarr[@]/$delete}
 PATHSCRIPTS=$array
+
+#exit 4
+
 
 if [ ! -e $PATHPACKET ] ; then
   sudo mkdir /var/lib/zabbix/
@@ -88,7 +106,7 @@ else
 fi
 
 
-curl https://bootstrap.pypa.io/get-pip.py | sudo -H python3
+#exit 4
 
 cd /tmp/ ; sudo chown -R zabbix. /var/lib/zabbix ; sudo -H -u zabbix python3 -m pip install wheel requests urllib3 pyrogram tgcrypto pycryptodome --user
 
