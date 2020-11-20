@@ -129,3 +129,5 @@ echo "cd $PATHSCRIPTS0 ; sudo -u zabbix vim configScripts.properties"
 echo ""
 echo "e vamos começar com os envios"
 echo ""
+
+sudo rm -rf /tmp/notificacoes.sh
