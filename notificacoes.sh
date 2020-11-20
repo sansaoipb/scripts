@@ -68,6 +68,7 @@ fi
 PATHSCRIPTS0="$(/usr/sbin/zabbix_server --help | grep "AlertScriptsPath" | awk '{ print $2 }' | tr -d "\"")"
 PROJETO=Graphical_notifications_Zabbix
 URLGIT=https://github.com/sansaoipb/$PROJETO
+MODULOS=/var/lib/zabbix
 PATHPACKET=/usr/lib/zabbix
 PATHSOURCE=/usr/local/share/zabbix
 
@@ -77,12 +78,6 @@ array=${strarr[@]/$delete}
 PATHSCRIPTS=$array
 
 #exit 4
-
-
-if [ ! -e $PATHPACKET ] ; then
-  sudo mkdir /var/lib/zabbix/
-fi
-
 
 if [ ! -e $PATHSCRIPTS ] ; then
   sudo mkdir -p $PATHSCRIPTS
@@ -105,9 +100,13 @@ else
 fi
 
 
+if [ ! -e $MODULOS ] ; then
+  sudo mkdir -p $MODULOS
+fi
+
 #exit 4
 
-cd /tmp/ ; sudo chown -R zabbix. /var/lib/zabbix ; sudo -H -u zabbix python3 -m pip install wheel requests urllib3 pyrogram tgcrypto pycryptodome --user
+cd /tmp/ ; sudo chown -R zabbix. $MODULOS ; sudo -H -u zabbix python3 -m pip install wheel requests urllib3 pyrogram tgcrypto pycryptodome --user
 
 if [ ! -e $PROJETO ] ; then
   git clone $URLGIT
