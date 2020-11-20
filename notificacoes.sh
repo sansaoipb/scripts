@@ -63,7 +63,6 @@ else
 
 fi
 
-#exit 4
 
 PATHSCRIPTS0="$(/usr/sbin/zabbix_server --help | grep "AlertScriptsPath" | awk '{ print $2 }' | tr -d "\"")"
 PROJETO=Graphical_notifications_Zabbix
@@ -77,10 +76,15 @@ delete=alertscripts
 array=${strarr[@]/$delete}
 PATHSCRIPTS=$array
 
-#exit 4
+
+if [ ! -e $MODULOS ] ; then
+  sudo mkdir -p $MODULOS
+
+fi
 
 if [ ! -e $PATHSCRIPTS ] ; then
   sudo mkdir -p $PATHSCRIPTS
+
 fi
 
 
@@ -99,10 +103,6 @@ else
   sudo chown -R zabbix. $PATHSOURCE
 fi
 
-
-if [ ! -e $MODULOS ] ; then
-  sudo mkdir -p $MODULOS
-fi
 
 #exit 4
 
