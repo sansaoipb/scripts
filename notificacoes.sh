@@ -73,8 +73,8 @@ PATHSOURCE=/usr/local/share/zabbix
 
 PATHS=$PATHSCRIPTS0
 delete=alertscripts
-array=${strarr[@]/$delete}
-PATHSCRIPTS=$array
+ARRAY=${PATHS[@]/$delete}
+PATHSCRIPTS=$ARRAY
 
 
 if [ ! -e $MODULOS ] ; then
