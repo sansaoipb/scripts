@@ -3,11 +3,11 @@
 
 CMDLINE=$0
 USER_ROOT=$(id | cut -d= -f2 | cut -d\( -f1)
-command_out=$( /usr/bin/python3 -V 2>&1 )
+pythonVersion=$( /usr/bin/python3 -V 2>&1 )
 command_rc=$?
-pythonVersion=$(echo $command_out | tr -d [:alpha:][:blank:] | cut -c 1-3)
+versionP=$(echo $pythonVersion | tr -d [:alpha:][:blank:] | cut -c 1-3)
 pathPIP=$(/usr/bin/which pip3 2>&1 )
-versioM=3.6
+versionM=3.6
 
 # Detecta se é um usuário com poderes de root que esta executando o script
 #####################################################################################
@@ -32,9 +32,9 @@ elif [ $command_rc -ne 0 ]; then
 
 # Detecta se o apontamento para python3 está para python 3.6 ou superior.
 #####################################################################################
-elif [ 1 -eq "$(echo "${pythonVersion} < ${versioM}" | bc)" ] ; then
+elif [ 1 -eq "$(echo "${versionP} < ${versionM}" | bc)" ] ; then
         echo ""
-        echo "A versão apontada para o '/usr/bin/python3' é do \"Python $pythonVersion\"."
+        echo "A versão apontada para o '/usr/bin/python3' é do \"$pythonVersion\"."
         echo "Instale/Atualize/Aponte para o python3.6 ou superior e reexecute o comando:"
         echo ""
         echo "sudo bash notificacoes.sh"
@@ -45,24 +45,33 @@ fi
 echo ""
 echo ""
 echo "Versão do '/usr/bin/python3' validada:"
-echo "Apontado para \"$command_out\"."
+echo "Apontado para \"$pythonVersion\"."
 echo ""
 echo ""
 echo ""
 
 
-if [ ! -z $pathPIP ] ; then
+if [ -z $pathPIP ] ; then
+  curl https://bootstrap.pypa.io/get-pip.py | sudo -H python3
+
+else
   pipVersion=$($pathPIP -V | cut -f 6 -d ' ' | tr -d [=\)=])
-
-  if [ 1 -eq "$(echo "${pipVersion} < ${versioM}" | bc)" ] ; then
+  if [ 1 -eq "$(echo "${pipVersion} < ${versionM}" | bc)" ] ; then
     curl https://bootstrap.pypa.io/get-pip.py | sudo -H python3
 
   fi
-else
-  curl https://bootstrap.pypa.io/get-pip.py | sudo -H python3
-
 fi
 
+#if [ ! -z $pathPIP ] ; then
+#  pipVersion=$($pathPIP -V | cut -f 6 -d ' ' | tr -d [=\)=])
+#  if [ 1 -eq "$(echo "${pipVersion} < ${versionM}" | bc)" ] ; then
+#    curl https://bootstrap.pypa.io/get-pip.py | sudo -H python3
+#
+#  fi
+#else
+#  curl https://bootstrap.pypa.io/get-pip.py | sudo -H python3
+#
+#fi
 
 PATHSCRIPTS0="$(/usr/sbin/zabbix_server --help | grep "AlertScriptsPath" | awk '{ print $2 }' | tr -d "\"")"
 PROJETO=Graphical_notifications_Zabbix
@@ -111,7 +120,6 @@ cd /tmp/ ; sudo chown -R zabbix. $MODULOS ; sudo -H -u zabbix python3 -m pip ins
 if [ ! -e $PROJETO ] ; then
   git clone $URLGIT
 fi
-
 
 
 if [ ! -e "$PATHSCRIPTS0/configScripts.properties" ] ; then
