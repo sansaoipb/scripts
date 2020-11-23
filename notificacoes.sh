@@ -48,7 +48,6 @@ echo "Versão do '/usr/bin/python3' validada:"
 echo "Apontado para \"$pythonVersion\"."
 echo ""
 echo ""
-echo ""
 
 
 if [ -z $pathPIP ] ; then
