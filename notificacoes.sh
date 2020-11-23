@@ -62,16 +62,6 @@ else
   fi
 fi
 
-#if [ ! -z $pathPIP ] ; then
-#  pipVersion=$($pathPIP -V | cut -f 6 -d ' ' | tr -d [=\)=])
-#  if [ 1 -eq "$(echo "${pipVersion} < ${versionM}" | bc)" ] ; then
-#    curl https://bootstrap.pypa.io/get-pip.py | sudo -H python3
-#
-#  fi
-#else
-#  curl https://bootstrap.pypa.io/get-pip.py | sudo -H python3
-#
-#fi
 
 PATHSCRIPTS0="$(/usr/sbin/zabbix_server --help | grep "AlertScriptsPath" | awk '{ print $2 }' | tr -d "\"")"
 PROJETO=Graphical_notifications_Zabbix
