@@ -104,7 +104,7 @@ fi
 
 #exit 4
 
-cd /tmp/ ; sudo chown -R zabbix. $MODULOS ; sudo -H -u zabbix python3 -m pip install wheel requests urllib3 pyrogram tgcrypto pycryptodome --user
+cd /tmp/ ; sudo chown -R zabbix. $MODULOS ; sudo -H -u zabbix python3 -m pip install wheel requests urllib3 pyrogram==1.0.7 tgcrypto pycryptodome --user
 
 if [ ! -e $PROJETO ] ; then
   git clone $URLGIT
