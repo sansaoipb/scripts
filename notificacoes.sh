@@ -32,14 +32,14 @@ elif [ $command_rc -ne 0 ]; then
 
 # Detecta se o apontamento para python3 está para python 3.6 ou superior.
 #####################################################################################
-elif [ 1 -eq "$(echo "${versionP} < ${versionM}" | bc)" ] ; then
-        echo ""
-        echo "A versão apontada para o '/usr/bin/python3' é do \"$pythonVersion\"."
-        echo "Instale/Atualize/Aponte para o python3.6 ou superior e reexecute o comando:"
-        echo ""
-        echo "sudo bash notificacoes.sh"
-        echo ""
-        exit 3
+#elif [ 1 -eq "$(echo "${versionP} < ${versionM}" | bc)" ] ; then
+#        echo ""
+#        echo "A versão apontada para o '/usr/bin/python3' é do \"$pythonVersion\"."
+#        echo "Instale/Atualize/Aponte para o python3.6 ou superior e reexecute o comando:"
+#        echo ""
+#        echo "sudo bash notificacoes.sh"
+#        echo ""
+#        exit 3
 fi
 
 echo ""
