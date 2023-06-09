@@ -24,7 +24,7 @@ if [ ! "$USER_ROOT" -eq 0 ] ; then
 elif [ $command_rc -ne 0 ]; then
         echo ""
         echo "Apontamento '/usr/bin/python3' não encontrado."
-        echo "Instale/Aponte o '/usr/bin/python3.6' ou superior para '/usr/bin/python3' e reexecute o comando:"
+        echo "Instale/Aponte o '/usr/bin/python3.9' ou superior para '/usr/bin/python3' e reexecute o comando:"
         echo ""
         echo "sudo bash notificacoes.sh"
         echo ""
