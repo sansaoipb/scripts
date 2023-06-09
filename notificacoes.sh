@@ -1,13 +1,13 @@
 #!/bin/bash
 # ESCRITO POR SANSÃO
 
+versionM=3.9
 CMDLINE=$0
 USER_ROOT=$(id | cut -d= -f2 | cut -d\( -f1)
 pythonVersion=$( /usr/bin/python3 -V 2>&1 )
 command_rc=$?
 versionP=$(echo $pythonVersion | tr -d [:alpha:][:blank:] | cut -c 1-3)
-pathPIP=$(/usr/bin/which pip3 2>&1 )
-versionM=3.6
+#pathPIP=$(/usr/bin/which pip3 2>&1 )
 
 # Detecta se é um usuário com poderes de root que esta executando o script
 #####################################################################################
@@ -50,16 +50,16 @@ echo ""
 echo ""
 
 
-if [ -z $pathPIP ] ; then
-  curl https://bootstrap.pypa.io/get-pip.py | sudo -H python3
-
-else
-  pipVersion=$($pathPIP -V | cut -f 6 -d ' ' | tr -d [=\)=])
-  if [ 1 -eq "$(echo "${pipVersion} < ${versionM}" | bc)" ] ; then
-    curl https://bootstrap.pypa.io/get-pip.py | sudo -H python3
-
-  fi
-fi
+#if [ -z $pathPIP ] ; then
+#  curl https://bootstrap.pypa.io/get-pip.py | sudo -H python3
+#
+#else
+#  pipVersion=$($pathPIP -V | cut -f 6 -d ' ' | tr -d [=\)=])
+#  if [ 1 -eq "$(echo "${pipVersion} < ${versionM}" | bc)" ] ; then
+#    curl https://bootstrap.pypa.io/get-pip.py | sudo -H python3
+#
+#  fi
+#fi
 
 
 PATHSCRIPTS0="$(/usr/sbin/zabbix_server --help | grep "AlertScriptsPath" | awk '{ print $2 }' | tr -d "\"")"
