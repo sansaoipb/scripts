@@ -6,8 +6,12 @@ CMDLINE=$0
 USER_ROOT=$(id | cut -d= -f2 | cut -d\( -f1)
 pythonVersion=$( /usr/bin/python3 -V 2>&1 )
 command_rc=$?
-versionP=$(echo $pythonVersion | tr -d [:alpha:][:blank:] | cut -c 1-3)
-#pathPIP=$(/usr/bin/which pip3 2>&1 )
+
+versionP=$(echo $pythonVersion | cut -d' ' -f2 | cut -d. -f1,2)
+pathPIP=$(/usr/bin/which pip3 2>&1 )
+
+versionP2=$(echo $versionP | cut -d. -f2)
+versionM2=$(echo $versionM | cut -d. -f2)
 
 # Detecta se é um usuário com poderes de root que esta executando o script
 #####################################################################################
@@ -19,7 +23,7 @@ if [ ! "$USER_ROOT" -eq 0 ] ; then
         echo ""
         exit 1
 
-# Detecta se o python 3.6 ou superior existe no ambiente
+# Detecta se o python 3.9 ou superior existe no ambiente
 #####################################################################################
 elif [ $command_rc -ne 0 ]; then
         echo ""
@@ -30,16 +34,16 @@ elif [ $command_rc -ne 0 ]; then
         echo ""
         exit 2
 
-# Detecta se o apontamento para python3 está para python 3.6 ou superior.
+# Detecta se o apontamento para python3 está para python 3.9 ou superior.
 #####################################################################################
-#elif [ 1 -eq "$(echo "${versionP} < ${versionM}" | bc)" ] ; then
-#        echo ""
-#        echo "A versão apontada para o '/usr/bin/python3' é do \"$pythonVersion\"."
-#        echo "Instale/Atualize/Aponte para o python3.6 ou superior e reexecute o comando:"
-#        echo ""
-#        echo "sudo bash notificacoes.sh"
-#        echo ""
-#        exit 3
+elif [ 1 -eq "$(echo "${versionP2} < ${versionM2}" | bc)" ] ; then
+        echo ""
+        echo "A versão apontada para o '/usr/bin/python3' é do \"$pythonVersion\"."
+        echo "Instale/Atualize/Aponte para o python3.9 ou superior e reexecute o comando:"
+        echo ""
+        echo "sudo bash notificacoes.sh"
+        echo ""
+        exit 3
 fi
 
 echo ""
@@ -48,19 +52,6 @@ echo "Versão do '/usr/bin/python3' validada:"
 echo "Apontado para \"$pythonVersion\"."
 echo ""
 echo ""
-
-
-#if [ -z $pathPIP ] ; then
-#  curl https://bootstrap.pypa.io/get-pip.py | sudo -H python3
-#
-#else
-#  pipVersion=$($pathPIP -V | cut -f 6 -d ' ' | tr -d [=\)=])
-#  if [ 1 -eq "$(echo "${pipVersion} < ${versionM}" | bc)" ] ; then
-#    curl https://bootstrap.pypa.io/get-pip.py | sudo -H python3
-#
-#  fi
-#fi
-
 
 PATHSCRIPTS0="$(/usr/sbin/zabbix_server --help | grep "AlertScriptsPath" | awk '{ print $2 }' | tr -d "\"")"
 PROJETO=Graphical_notifications_Zabbix
@@ -102,12 +93,10 @@ else
 fi
 
 
-#exit 4
-
-cd /tmp/ ; sudo chown -R zabbix. $MODULOS ; sudo -H -u zabbix python3 -m pip install wheel requests urllib3 pyrogram tgcrypto pycryptodome --user
+cd /tmp/ ; sudo chown -R zabbix. $MODULOS ; sudo -H -u zabbix /usr/bin/pip3 install wheel requests urllib3 pyrogram tgcrypto pycryptodome --user
 
 if [ ! -e $PROJETO ] ; then
-  git clone -b beta $URLGIT
+  git clone -b beta $URLGIT  
 fi
 
 
@@ -115,9 +104,7 @@ if [ ! -e "$PATHSCRIPTS0/configScripts.properties" ] ; then
   sudo cp -R /tmp/$PROJETO/configScripts.properties $PATHSCRIPTS0
 fi
 
-cd /tmp/$PROJETO/ ; sudo cp -R notificacoes* $PATHSCRIPTS0 ; cd $PATHSCRIPTS0 ; sudo chmod +x *.py ; dos2unix *.py ; sudo rm -rf /tmp/$PROJETO/ ; sudo chown -R zabbix. $PATHSCRIPTS $PATHSCRIPTS0
-
-#clear
+cd /tmp/$PROJETO/ ; sudo cp -R notificacoes* $PATHSCRIPTS0 ; cd $PATHSCRIPTS0 ; sudo chmod +x *.py ; dos2unix *.py ; sudo rm -rf /tmp/$PROJETO/ ; sudo chown -R zabbix:zabbix $PATHSCRIPTS $PATHSCRIPTS0
 
 echo ""
 echo "Execute o comando abaixo para editar o arquivo de configuração:"
