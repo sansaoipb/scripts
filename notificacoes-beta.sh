@@ -93,7 +93,7 @@ else
 fi
 
 
-cd /tmp/ ; sudo chown -R zabbix. $MODULOS ; sudo -H -u zabbix /usr/bin/pip3 install wheel requests urllib3 pyrogram tgcrypto pycryptodome --user
+cd /tmp/ ; sudo chown -R zabbix. $MODULOS ; sudo -H -u zabbix /usr/bin/pip3 install wheel requests urllib3 pyrogram tgcrypto pycryptodome --user -U
 
 if [ ! -e $PROJETO ] ; then
   git clone -b beta $URLGIT  
