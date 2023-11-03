@@ -4,7 +4,7 @@
 versionM=3.9
 CMDLINE=$0
 USER_ROOT=$(id | cut -d= -f2 | cut -d\( -f1)
-pythonVersion=$( /usr/bin/python3 -V 2>&1 )
+pythonVersion=$(/usr/bin/python3 -V 2>&1)
 command_rc=$?
 
 versionP=$(echo $pythonVersion | cut -d' ' -f2 | cut -d. -f1,2)
@@ -82,21 +82,21 @@ if [ -e $PATHPACKET ] ; then
     sudo ln -s $PATHPACKET/alertscripts/ $PATHPACKET/externalscripts/ $PATHSCRIPTS
 
   fi
-  sudo chown -R zabbix. $PATHPACKET
+  sudo chown -R zabbix:zabbix $PATHPACKET
 
 else
   if [ ! -e $PATHSCRIPTS0 ] ; then
     sudo ln -s $PATHSOURCE/alertscripts/ $PATHSOURCE/externalscripts/ $PATHSCRIPTS
 
   fi
-  sudo chown -R zabbix. $PATHSOURCE
+  sudo chown -R zabbix:zabbix $PATHSOURCE
 fi
 
 
-cd /tmp/ ; sudo chown -R zabbix. $MODULOS ; sudo -H -u zabbix /usr/bin/pip3 install wheel requests urllib3 pyrogram tgcrypto pycryptodome --user -U
+cd /tmp/ ; sudo chown -R zabbix:zabbix $MODULOS ; sudo -H -u zabbix /usr/bin/pip3 install wheel requests urllib3 pyrogram tgcrypto pycryptodome --user -U
 
 if [ ! -e $PROJETO ] ; then
-  git clone -b beta $URLGIT  
+  git clone -b beta $URLGIT
 fi
 
 
