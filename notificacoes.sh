@@ -8,7 +8,7 @@ pythonVersion=$(/usr/bin/python3 -V 2>&1)
 command_rc=$?
 
 versionP=$(echo $pythonVersion | cut -d' ' -f2 | cut -d. -f1,2)
-pathPIP=$(/usr/bin/which pip3 2>&1 )
+pathPIP=$(/usr/bin/which pip$versionP 2>&1)
 
 versionP2=$(echo $versionP | cut -d. -f2)
 versionM2=$(echo $versionM | cut -d. -f2)
@@ -52,6 +52,22 @@ echo "Versão do '/usr/bin/python3' validada:"
 echo "Apontado para \"$pythonVersion\"."
 echo ""
 echo ""
+
+
+if [ -z $pathPIP ] ; then
+  curl https://bootstrap.pypa.io/get-pip.py | sudo -H python3
+
+else
+  pipVersion=$($pathPIP -V | cut -f 6 -d ' ' | tr -d [=\)=])
+  if [ 1 -eq "$(echo "${pipVersion} < ${versionM}" | bc)" ] ; then
+    curl https://bootstrap.pypa.io/get-pip.py | sudo -H python3
+
+  fi
+fi
+
+pathPIP=$(/usr/bin/which pip$versionP 2>&1)
+ln -sf $pathPIP /usr/bin/pip3
+
 
 PATHSCRIPTS0="$(/usr/sbin/zabbix_server --help | grep "AlertScriptsPath" | awk '{ print $2 }' | tr -d "\"")"
 PROJETO=Graphical_notifications_Zabbix
@@ -114,5 +130,3 @@ echo "cd $PATHSCRIPTS0 ; sudo -u zabbix vim configScripts.properties"
 echo ""
 echo "e vamos começar com os envios"
 echo ""
-
-sudo rm -rf /tmp/notificacoes.sh
