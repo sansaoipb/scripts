@@ -4,11 +4,11 @@
 versionM=3.9
 CMDLINE=$0
 USER_ROOT=$(id | cut -d= -f2 | cut -d\( -f1)
-pythonVersion=$(/usr/bin/python3 -V 2>&1)
+pythonVersion=$( /usr/bin/python3 -V 2>&1 )
 command_rc=$?
 
 versionP=$(echo $pythonVersion | cut -d' ' -f2 | cut -d. -f1,2)
-pathPIP=$(/usr/bin/which pip$versionP 2>&1)
+pathPIP=$(/usr/bin/which pip3 2>&1 )
 
 versionP2=$(echo $versionP | cut -d. -f2)
 versionM2=$(echo $versionM | cut -d. -f2)
@@ -86,7 +86,6 @@ if [ ! -e $MODULOS ] ; then
   sudo mkdir -p $MODULOS
 
 fi
-
 
 if [ ! -e $PATHSCRIPTS ] ; then
   sudo mkdir -p $PATHSCRIPTS
