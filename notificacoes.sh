@@ -8,7 +8,7 @@ pythonVersion=$(/usr/bin/python3 -V 2>&1)
 command_rc=$?
 
 versionP=$(echo $pythonVersion | cut -d' ' -f2 | cut -d. -f1,2)
-pathPIP=$(/usr/bin/which pip3 2>&1 )
+pathPIP=$(/usr/bin/which pip3 2>&1)
 
 versionP2=$(echo $versionP | cut -d. -f2)
 versionM2=$(echo $versionM | cut -d. -f2)
@@ -67,7 +67,6 @@ fi
 pathPIP=$(/usr/bin/which pip$versionP 2>&1)
 ln -sf $pathPIP /usr/bin/pip3
 
-
 PATHSCRIPTS0="$(/usr/sbin/zabbix_server --help | grep "AlertScriptsPath" | awk '{ print $2 }' | tr -d "\"")"
 PROJETO=Graphical_notifications_Zabbix
 URLGIT=https://github.com/sansaoipb/$PROJETO
@@ -80,7 +79,6 @@ delete=alertscripts
 ARRAY=${PATHS[@]/$delete}
 PATHSCRIPTS=$ARRAY
 
-
 if [ ! -e $MODULOS ] ; then
   sudo mkdir -p $MODULOS
 
@@ -90,7 +88,6 @@ if [ ! -e $PATHSCRIPTS ] ; then
   sudo mkdir -p $PATHSCRIPTS
 
 fi
-
 
 if [ -e $PATHPACKET ] ; then
    if [ ! -e $PATHSCRIPTS0 ] ; then
