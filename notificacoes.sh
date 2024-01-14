@@ -4,7 +4,7 @@
 versionM=3.9
 CMDLINE=$0
 USER_ROOT=$(id | cut -d= -f2 | cut -d\( -f1)
-pythonVersion=$( /usr/bin/python3 -V 2>&1 )
+pythonVersion=$(/usr/bin/python3 -V 2>&1)
 command_rc=$?
 
 versionP=$(echo $pythonVersion | cut -d' ' -f2 | cut -d. -f1,2)
@@ -52,7 +52,6 @@ echo "Versão do '/usr/bin/python3' validada:"
 echo "Apontado para \"$pythonVersion\"."
 echo ""
 echo ""
-
 
 if [ -z $pathPIP ] ; then
   curl https://bootstrap.pypa.io/get-pip.py | sudo -H python3
