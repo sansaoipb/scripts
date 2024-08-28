@@ -33,7 +33,7 @@ fi
 cd /tmp/
 
 if [ ! -e $PROJETO ] ; then
-  git clone $URLGIT
+  git clone -b beta $URLGIT
 fi
 
 
