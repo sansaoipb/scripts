@@ -8,7 +8,6 @@ PATHSCRIPTS0="/etc/zabbix/scripts"
 ############################################### WppConnect #############################################################
 # Atualizando o sistema e instalando dependências
 sudo apt update
-sudo apt upgrade -y
 sudo apt install -y npm curl dirmngr apt-transport-https lsb-release ca-certificates wget net-tools nginx
 curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 sudo apt install -y nodejs
