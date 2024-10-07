@@ -13,7 +13,6 @@ if [ ! "$USER_ROOT" -eq 0 ] ; then
         echo "sudo bash $CMDLINE"
         echo ""
         exit 1
-
 fi
 
 PATHSOURCE="/etc/zabbix/scripts"
@@ -37,15 +36,15 @@ else
 
 fi
 
-############################# WppConnect #############################
+################################################ WppConnect ################################################
 cd $PATHSCRIPTS0
 git clone https://github.com/wppconnect-team/wppconnect-server.git
 cd wppconnect-server
 npm install
 npm run build
 sudo npm install -g pm2
-############################# WppConnect #############################
-
+sed -i "s/deviceName: 'WppConnect'/deviceName: 'SendGraph'/" $PATHSCRIPTS0/wppconnect-server/src/config.ts
+################################################ WppConnect ################################################
 
 cd /tmp/
 
@@ -53,12 +52,11 @@ if [ ! -e $PROJETO ] ; then
   git clone -b beta $URLGIT
 fi
 
-
 if [ ! -e "$PATHSCRIPTS0/configScripts.properties" ] ; then
   sudo cp -R /tmp/$PROJETO/configScripts.properties $PATHSCRIPTS0
 fi
 
-cd /tmp/$PROJETO/ ; sudo cp -R notificacoes* $PATHSCRIPTS0 ; cd $PATHSCRIPTS0 ; sudo chmod +x *.py ; dos2unix *.py ; sudo rm -rf /tmp/$PROJETO/ ; sudo chown -R zabbix:zabbix $PATHSCRIPTS $PATHSCRIPTS0
+cd /tmp/$PROJETO/ ; sudo cp -R notificacoes* $PATHSCRIPTS0 ; cd $PATHSCRIPTS0 ; sudo chmod +x *.py ; dos2unix *.py ; sudo rm -rf /tmp/$PROJETO/
 
 echo ""
 echo "Execute o comando abaixo para editar o arquivo de configuração:"
