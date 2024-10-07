@@ -15,10 +15,6 @@ if [ ! "$USER_ROOT" -eq 0 ] ; then
         exit 1
 fi
 
-apt-get install -y dos2unix git sudo curl
-curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-sudo apt-get install nsolid -y
-
 PATHSOURCE="/etc/zabbix/scripts"
 PATHSCRIPTS0="$(/usr/sbin/zabbix_server --help | grep "AlertScriptsPath" | awk '{ print $2 }' | tr -d "\"")" 2>/dev/null
 PROJETO=Graphical_notifications_Zabbix
@@ -39,16 +35,6 @@ else
   ln -s $PATHSCRIPTS0 $PATHSOURCE
 
 fi
-
-################################################ WppConnect ################################################
-cd $PATHSCRIPTS0
-git clone https://github.com/wppconnect-team/wppconnect-server.git
-cd wppconnect-server
-npm install
-npm run build
-sudo npm install -g pm2
-sed -i "s/deviceName: 'WppConnect'/deviceName: 'SendGraph'/" $PATHSCRIPTS0/wppconnect-server/src/config.ts
-################################################ WppConnect ################################################
 
 cd /tmp/
 
