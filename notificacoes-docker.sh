@@ -15,7 +15,9 @@ if [ ! "$USER_ROOT" -eq 0 ] ; then
         exit 1
 fi
 
-sudo apt-get install -y dos2unix git sudo curl
+apt-get install -y dos2unix git sudo curl
+curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt-get install nsolid -y
 
 PATHSOURCE="/etc/zabbix/scripts"
 PATHSCRIPTS0="$(/usr/sbin/zabbix_server --help | grep "AlertScriptsPath" | awk '{ print $2 }' | tr -d "\"")" 2>/dev/null
