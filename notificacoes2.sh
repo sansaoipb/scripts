@@ -1,6 +1,8 @@
 #!/bin/bash
 # ESCRITO POR SANSÃO
 
+PATHSCRIPTS="/etc/zabbix/scripts"
+
 ############################################### WppConnect #############################################################
 # Atualizando o sistema e instalando dependências
 sudo apt update
@@ -15,14 +17,17 @@ wget -c https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.de
 sudo dpkg -i google-chrome-stable_current_amd64.deb
 sudo apt-get install -f -y
 
-cd $PATHSCRIPTS0
+if [ -z $PATHSCRIPTS ]; then
+  sudo mkdir -p $PATHSCRIPTS
+
+cd ~
 git clone https://github.com/wppconnect-team/wppconnect-server.git
 cd wppconnect-server
 npm install
 npm run build
 sudo npm install -g pm2
 
-sed -i "s/deviceName: 'WppConnect'/deviceName: 'SendGraph'/" $PATHSCRIPTS0/wppconnect-server/src/config.ts
+sed -i "s/deviceName: 'WppConnect'/deviceName: 'SendGraph'/" ~/wppconnect-server/src/config.ts
 
 # Configurando o NGINX
 sudo rm /etc/nginx/sites-enabled/default
@@ -53,7 +58,7 @@ sudo ufw allow 443/tcp
 sudo service ufw restart
 
 sudo tee /usr/local/bin/wpp_connect > /dev/null <<EOF
-cd $PATHSCRIPTS0/wppconnect-server
+cd $PATHSCRIPTS/wppconnect-server
 pm2 start npm --name wpp -- start
 EOF
 
@@ -85,3 +90,23 @@ apt-get install -y python3 python3-pip wget dos2unix git sudo curl bc vim; apt c
 pythonVersion=$(/usr/bin/python3 -V 2>&1 | cut -d' ' -f2 | cut -d. -f1,2)
 rm -rf /usr/lib/python$pythonVersion/EXTERNALLY-MANAGED
 cd /tmp/ ; sudo /usr/bin/pip3 install wheel requests urllib3 pyrogram tgcrypto pycryptodome flask
+
+if [ ! -e $PROJETO ] ; then
+  git clone -b beta $URLGIT
+fi
+
+if [ ! -e "$PATHSCRIPTS/configScripts.properties" ] ; then
+  sudo cp -R /tmp/$PROJETO/configScripts.properties $PATHSCRIPTS
+fi
+
+cd /tmp/$PROJETO/ ; sudo cp -R notificacoes* $PATHSCRIPTS ; cd $PATHSCRIPTS ; sudo chmod +x *.py ; dos2unix *.py ; sudo rm -rf /tmp/$PROJETO/
+
+echo ""
+echo "Execute o comando abaixo para editar o arquivo de configuração:"
+echo ""
+echo "cd $PATHSCRIPTS ; sudo -u zabbix vim configScripts.properties"
+echo ""
+echo "e vamos começar com os envios"
+echo ""
+
+sudo rm -rf /tmp/notificacoes.sh
