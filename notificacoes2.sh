@@ -19,6 +19,7 @@ sudo apt-get install -f -y
 
 if [ -z $PATHSCRIPTS ]; then
   sudo mkdir -p $PATHSCRIPTS
+fi
 
 cd ~
 git clone https://github.com/wppconnect-team/wppconnect-server.git
