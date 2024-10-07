@@ -18,9 +18,11 @@ sudo dpkg -i google-chrome-stable_current_amd64.deb
 sudo apt-get install -f -y
 
 if [ -z $PATHSCRIPTS ]; then
+  echo "criando diretorio '$PATHSCRIPTS'"
   sudo mkdir -p $PATHSCRIPTS
 fi
 
+echo "entrando no '$PATHSCRIPTS'"
 cd $PATHSCRIPTS
 git clone https://github.com/wppconnect-team/wppconnect-server.git
 cd wppconnect-server
