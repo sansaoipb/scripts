@@ -37,6 +37,16 @@ else
 
 fi
 
+############################# WppConnect #############################
+cd $PATHSCRIPTS0
+git clone https://github.com/wppconnect-team/wppconnect-server.git
+cd wppconnect-server
+npm install
+npm run build
+sudo npm install -g pm2
+############################# WppConnect #############################
+
+
 cd /tmp/
 
 if [ ! -e $PROJETO ] ; then
