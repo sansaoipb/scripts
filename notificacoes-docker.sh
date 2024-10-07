@@ -15,6 +15,8 @@ if [ ! "$USER_ROOT" -eq 0 ] ; then
         exit 1
 fi
 
+sudo apt-get install -y dos2unix git sudo curl
+
 PATHSOURCE="/etc/zabbix/scripts"
 PATHSCRIPTS0="$(/usr/sbin/zabbix_server --help | grep "AlertScriptsPath" | awk '{ print $2 }' | tr -d "\"")" 2>/dev/null
 PROJETO=Graphical_notifications_Zabbix
