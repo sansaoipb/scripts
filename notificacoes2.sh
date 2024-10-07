@@ -18,11 +18,9 @@ sudo dpkg -i google-chrome-stable_current_amd64.deb
 sudo apt-get install -f -y
 
 if [ -z $PATHSCRIPTS ]; then
-  echo "criando diretorio '$PATHSCRIPTS'"
   sudo mkdir -p $PATHSCRIPTS
 fi
 
-echo "entrando no '$PATHSCRIPTS'"
 cd $PATHSCRIPTS
 git clone https://github.com/wppconnect-team/wppconnect-server.git
 cd wppconnect-server
@@ -102,7 +100,7 @@ if [ ! -e "$PATHSCRIPTS/configScripts.properties" ] ; then
   sudo cp -R /tmp/$PROJETO/configScripts.properties $PATHSCRIPTS
 fi
 
-cd /tmp/$PROJETO/ ; sudo cp -R notificacoes* $PATHSCRIPTS ; cd $PATHSCRIPTS ; sudo chmod +x *.py ; dos2unix *.py ; sudo rm -rf /tmp/$PROJETO/
+cd /tmp/$PROJETO/ ; sudo cp -R notificacoes* $PATHSCRIPTS ; cd $PATHSCRIPTS ; sudo chmod +x *.py ; dos2unix *.py ; cd .. ; sudo rm -rf $PROJETO
 
 echo ""
 echo "Execute o comando abaixo para editar o arquivo de configuração:"
@@ -112,4 +110,4 @@ echo ""
 echo "e vamos começar com os envios"
 echo ""
 
-sudo rm -rf /tmp/notificacoes.sh
+sudo rm -rf notificacoes.sh
