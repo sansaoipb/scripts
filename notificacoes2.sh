@@ -21,14 +21,14 @@ if [ -z $PATHSCRIPTS ]; then
   sudo mkdir -p $PATHSCRIPTS
 fi
 
-cd ~
+cd $PATHSCRIPTS
 git clone https://github.com/wppconnect-team/wppconnect-server.git
 cd wppconnect-server
 npm install
 npm run build
 sudo npm install -g pm2
 
-sed -i "s/deviceName: 'WppConnect'/deviceName: 'SendGraph'/" ~/wppconnect-server/src/config.ts
+sed -i "s/deviceName: 'WppConnect'/deviceName: 'SendGraph'/" $PATHSCRIPTS/wppconnect-server/src/config.ts
 
 # Configurando o NGINX
 sudo rm /etc/nginx/sites-enabled/default
