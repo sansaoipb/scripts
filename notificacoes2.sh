@@ -22,13 +22,15 @@ sudo dpkg -i google-chrome-stable_current_amd64.deb
 sudo apt-get install -f -y
 
 cd $PATHSCRIPTS
-git clone https://github.com/wppconnect-team/wppconnect-server.git
-cd wppconnect-server
-npm install
-npm run build
-sudo npm install -g pm2
-
-sed -i "s/deviceName: 'WppConnect'/deviceName: 'SendGraph'/" $PATHSCRIPTS/wppconnect-server/src/config.ts
+if [ -z $PATHSCRIPTS/wppconnect-server ] ; then
+  git clone https://github.com/wppconnect-team/wppconnect-server.git
+  cd wppconnect-server
+  npm install
+  npm run build
+  sudo npm install -g pm2
+  sed -i "s/deviceName: 'WppConnect'/deviceName: 'SendGraph'/" $PATHSCRIPTS/wppconnect-server/src/config.ts
+fi
+pm2 start npm --name wpp -- start
 
 # Configurando o NGINX
 sudo rm /etc/nginx/sites-enabled/default
@@ -57,32 +59,6 @@ sudo service nginx restart
 sudo ufw allow 80/tcp
 sudo ufw allow 443/tcp
 sudo service ufw restart
-
-sudo tee /usr/local/bin/wpp_connect > /dev/null <<EOF
-cd $PATHSCRIPTS/wppconnect-server
-pm2 start npm --name wpp -- start
-EOF
-
-sudo chmod +x /usr/local/bin/wpp_connect
-
-sudo tee /etc/systemd/system/wppconnect.service  > /dev/null <<EOF
-[Unit]
-Description=Serviço de Envio para WhatsApp
-After=network.target
-
-[Service]
-Type=simple
-ExecStart=/usr/local/bin/wpp_connect
-Restart=on-failure
-User=root
-Group=root
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-sudo systemctl daemon-reload
-sudo systemctl enable wppconnect
 
 ############################################### WppConnect #############################################################
 
