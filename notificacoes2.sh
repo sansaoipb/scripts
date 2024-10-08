@@ -100,7 +100,7 @@ if [ ! -e "$PATHSCRIPTS/configScripts.properties" ] ; then
   sudo cp -R /tmp/$PROJETO/configScripts.properties $PATHSCRIPTS
 fi
 
-cd /tmp/$PROJETO/ ; sudo cp -R notificacoes* $PATHSCRIPTS ; cd $PATHSCRIPTS ; sudo chmod +x *.py ; dos2unix *.py ; cd .. ; sudo rm -rf $PROJETO
+sudo cp -R /tmp/$PROJETO/notificacoes* $PATHSCRIPTS ; sudo chmod +x $PATHSCRIPTS/*.py ; dos2unix $PATHSCRIPTS/*.py ; sudo rm -rf /tmp/$PROJETO
 
 echo ""
 echo "Execute o comando abaixo para editar o arquivo de configuração:"
@@ -110,4 +110,4 @@ echo ""
 echo "e vamos começar com os envios"
 echo ""
 
-sudo rm -rf notificacoes.sh
+sudo rm -rf /tmp/notificacoes.sh
