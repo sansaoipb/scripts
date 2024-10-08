@@ -2,6 +2,8 @@
 # ESCRITO POR SANSÃO
 
 PATHSCRIPTS="/etc/zabbix/scripts"
+PROJETO=Graphical_notifications_Zabbix
+URLGIT=https://github.com/sansaoipb/$PROJETO
 
 ############################################### WppConnect #############################################################
 # Atualizando o sistema e instalando dependências
