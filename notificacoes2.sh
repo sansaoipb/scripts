@@ -22,7 +22,7 @@ sudo dpkg -i google-chrome-stable_current_amd64.deb ; rm -rf google-chrome-stabl
 sudo apt-get install -f -y
 
 cd $PATHSCRIPTS
-if [ -z $PATHSCRIPTS/wppconnect-server ] ; then
+if [ -z "$PATHSCRIPTS/wppconnect-server" ] ; then
   git clone https://github.com/wppconnect-team/wppconnect-server.git
   cd wppconnect-server
   npm install
