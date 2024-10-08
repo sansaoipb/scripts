@@ -20,14 +20,14 @@ wget -c https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.de
 sudo dpkg -i google-chrome-stable_current_amd64.deb ; rm -rf google-chrome-stable_current_amd64.deb
 sudo apt-get install -f -y
 
-cd $PATHSCRIPTS
-if [ ! -e "$PATHSCRIPTS/wppconnect-server" ] ; then
+cd ~
+if [ ! -e "~/wppconnect-server" ] ; then
   git clone https://github.com/wppconnect-team/wppconnect-server.git
   cd wppconnect-server
   npm install
   npm run build
   sudo npm install -g pm2
-  sed -i "s/deviceName: 'WppConnect'/deviceName: 'SendGraph'/" $PATHSCRIPTS/wppconnect-server/src/config.ts
+  sed -i "s/deviceName: 'WppConnect'/deviceName: 'SendGraph'/" ~/wppconnect-server/src/config.ts
 fi
 pm2 start npm --name wpp -- start
 
