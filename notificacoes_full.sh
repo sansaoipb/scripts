@@ -24,10 +24,10 @@ cd ~
 if [ ! -e "~/wppconnect-server" ] ; then
   git clone https://github.com/wppconnect-team/wppconnect-server.git
   cd wppconnect-server
+  sed -i "s/deviceName: 'WppConnect'/deviceName: 'SendGraph'/" ~/wppconnect-server/src/config.ts
   npm install
   npm run build
   sudo npm install -g pm2
-  sed -i "s/deviceName: 'WppConnect'/deviceName: 'SendGraph'/" ~/wppconnect-server/src/config.ts
 fi
 pm2 start npm --name wpp -- start
 
