@@ -29,7 +29,6 @@ if [ ! -e "~/wppconnect-server" ] ; then
   npm run build
   sudo npm install -g pm2
 fi
-pm2 start npm --name wpp -- start
 
 # Configurando o NGINX
 sudo rm /etc/nginx/sites-enabled/default
