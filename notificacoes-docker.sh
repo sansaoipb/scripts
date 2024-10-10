@@ -51,7 +51,7 @@ cd /tmp/$PROJETO/ ; sudo cp -R notificacoes* $PATHSCRIPTS0 ; cd $PATHSCRIPTS0 ; 
 echo ""
 echo "Execute o comando abaixo para editar o arquivo de configuração:"
 echo ""
-echo "cd $PATHSCRIPTS0 ; sudo -u zabbix vim configScripts.properties"
+echo "cd $PATHSCRIPTS0 ; vim configScripts.properties"
 echo ""
 echo "e vamos começar com os envios"
 echo ""
