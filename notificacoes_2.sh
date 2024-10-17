@@ -5,7 +5,8 @@ PATHSCRIPTS="/etc/zabbix/scripts"
 PROJETO=Graphical_notifications_Zabbix
 URLGIT=https://github.com/sansaoipb/$PROJETO
 
-apt-get install -y python3 python3-pip wget dos2unix git sudo curl vim ; apt clean
+apt-get install -y python3 python3-pip wget dos2unix git sudo curl vim tzdata ; apt clean
+rm /etc/localtime ; ln -s /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 
 pythonVersion=$(/usr/bin/python3 -V 2>&1 | cut -d' ' -f2 | cut -d. -f1,2)
 rm -rf /usr/lib/python$pythonVersion/EXTERNALLY-MANAGED
