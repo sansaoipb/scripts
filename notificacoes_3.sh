@@ -11,7 +11,7 @@ rm /etc/localtime ; ln -s /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 
 pythonVersion=$(/usr/bin/python3 -V 2>&1 | cut -d' ' -f2 | cut -d. -f1,2)
 rm -rf /usr/lib/python$pythonVersion/EXTERNALLY-MANAGED
-cd /tmp/ ; sudo /usr/bin/pip3 install wheel requests urllib3 pyrogram tgcrypto pycryptodome flask
+cd /tmp/ ; sudo /usr/bin/pip3 install wheel requests urllib3 flask pyrogram tgcrypto pycryptodome
 
 if [ ! -e $PROJETO ] ; then
   git clone -b beta $URLGIT
